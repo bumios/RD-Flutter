@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:math';
-
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +6,11 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Welcome to Flutter', home: RandomWords());
+    return MaterialApp(
+      title: 'Welcome to Flutter',
+      theme: ThemeData(primaryColor: Colors.lightBlueAccent),
+      home: RandomWords(),
+    );
   }
 }
 
@@ -22,13 +23,47 @@ class RandomWords extends StatefulWidget {
 
 class _RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
-  final _biggerFont = const TextStyle(fontSize: 18.0);
+  final _biggerFont = const TextStyle(
+    fontSize: 18.0,
+  );
+  final _saved = <WordPair>{};
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Startup name generator')),
+        appBar: AppBar(title: const Text('Startup name generator'), actions: [
+          IconButton(
+            icon: Icon(Icons.list),
+            onPressed: _pushSaved,
+          )
+        ]),
         body: _buildSuggestions());
+  }
+
+  void _pushSaved() {
+    Navigator.of(context)
+        .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+      final tiles = _saved.map((WordPair wordPair) {
+        return ListTile(
+            title: Text(
+          wordPair.asPascalCase,
+          style: _biggerFont,
+        ));
+      });
+      final divided = tiles.isNotEmpty
+          ? ListTile.divideTiles(
+              context: context,
+              tiles: tiles,
+            ).toList()
+          : <Widget>[];
+
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Saved Suggestions'),
+        ),
+        body: ListView(children: divided),
+      );
+    }));
   }
 
   Widget _buildSuggestions() {
@@ -54,10 +89,26 @@ class _RandomWordsState extends State<RandomWords> {
   }
 
   Widget buildRow(WordPair wordPair) {
+    final isSaved = _saved.contains(wordPair);
+
     return ListTile(
-        title: Text(
-      wordPair.asPascalCase,
-      style: _biggerFont,
-    ));
+      title: Text(
+        wordPair.asPascalCase,
+        style: _biggerFont,
+      ),
+      trailing: Icon(
+        isSaved ? Icons.favorite : Icons.favorite_border,
+        color: isSaved ? Colors.red : null,
+      ),
+      onTap: () {
+        setState(() {
+          if (isSaved) {
+            _saved.remove(wordPair);
+          } else {
+            _saved.add(wordPair);
+          }
+        });
+      },
+    );
   }
 }
