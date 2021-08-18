@@ -215,6 +215,88 @@ print(levels.length)
 
 
 
+## 3/ Hàm:
+
+### 3.1/ Khai báo cơ bản:
+
+**Ý nghĩa function bên dưới:**
+
+* `void`: Giá trị trả về của hàm, nếu không có thì sẽ để `void` hoặc để trống (dynamic).
+* `sendMessage`: Tên hàm. **(Bắt buộc có)**
+
+* `String`: Kiểu dữ liệu của tham số. (Nếu không khai báo thì sẽ mặc định hiểu là dynamic)
+
+* `sender`, `message`: Tên tham số, phạm vi sử dụng ở bên trong thân hàm. (Không phải tên đối số khi gọi function)
+
+```dart
+void sendMessage(String sender, String message) {
+  print("$sender said: $message");
+}
+
+// Gọi hàm
+sendMessage("Bumios", "Welcome to my blog.")			// "Bumios said: Welcome to my blog."
+```
+
+
+
+### 3.2/ Shorthand syntax (`=>`)
+
+**Nếu 1 hàm mà chỉ có 1 dòng mã xử lý bên trong, thì chúng ta có thể áp dụng shorthand syntax thông qua ký tự `=>`.**
+
+```dart
+// Áp dụng shorthand syntax từ ví dụ trên
+sendMessage(String sender, String message) => print("$sender said: $message");
+```
+
+
+
+### 3.3/ Parameters
+
+#### 3.3.1/ Đặt tên cho tham số:
+
+**Từ phần tạo 1 function cơ bản, để có thể dùng tên tham số khi truyền vào, bọc toàn bộ tham số vào trong dấu ngoặc kép.**
+
+```dart
+void sendMessage({ String? sender, String? message }) => print("$sender said: $message");
+
+sendMessage(sender: "Bumios", message: "Welcome to my blog.");
+// -> "Bumios said: Welcome to my blog."
+
+// Chỉ truyền 1 tham số sender
+sendMessage(sender: "Bumios");
+// -> "Bumios said: null"
+```
+
+
+
+#### 3.3.2/ Required & Default value:
+
+**Từ khóa `Required` bắt buộc dùng khi thỏa mãn cả 2 điều kiện dưới: **
+
+- **Kiểu dữ liệu của tham số không phải optional.**
+- **Chưa được set giá trị mặc định.**
+
+```dart
+// Lỗi: sender và message không phải optional, và chưa được set default
+void sendMessage({ String sender, String message }) { }
+```
+
+
+
+**Để giải quyết vấn đề trên, có 2 cách:**
+
+```dart
+// - Cách 1: Thiết lập giá trị default cho tham số
+void sendMessage({ String sender = "Unknown", String message = "No message." }) { }
+
+// - Cách 2: Thêm từ khóa required
+void sendMessage({ required String sender, required String message }) { }
+```
+
+**Notes:** Tham số nào được gắn với từ khóa `required`, đối số của nó sẽ tự động được tạo ra lúc gọi hàm.
+
+
+
 
 
 ## Chưa rõ:
