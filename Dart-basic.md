@@ -215,7 +215,7 @@ print(levels.length)
 
 
 
-## 3/ Hàm:
+## 3/ Hàm (functions)
 
 ### 3.1/ Khai báo cơ bản:
 
@@ -297,8 +297,273 @@ void sendMessage({ required String sender, required String message }) { }
 
 
 
+### 3.4/ Functions as first-class objects
+
+**Từ bên trong 1 callback và gọi đến 1 hàm khác mà không cần khai báo đối số của hàm**
+**Điều kiện để áp dụng, 2 vế bên dưới phải giống nhau.**
+
+* **Số lượng phần tử và kiểu dữ liệu được trả về trong closure. (Trong ví dụ là hàm `forEach` trả về 1 `int`)**
+
+* **Kiểu dữ liệu các tham số của hàm. (Hàm `increaseAndPrint` có 1 tham số là `int`)**
+
+```dart
+// Ví dụ: Lặp từng số trong mảng, và in ra giá trị của nó + thêm 1
+// - Ta có 1 mảng số
+final numbers = [0, 1, 2, 3, 4, 5];
+
+// - Tạo 1 function xử lý tăng và in giá trị
+void increaseAndPrint(int number) {
+  number++;
+  print(number);
+}
+```
+
+Theo cách thông thường
+
+```dart
+numbers.forEach((element) {
+	increaseAndPrint(element);
+});
+```
+
+Dùng theo kiểu first class function
+
+```dart
+numbers.forEach(increaseAndPrint);
+```
 
 
-## Chưa rõ:
 
-/// - Assert dùng để làm gì
+
+
+## 4/ Toán tử (Operators)
+
+### 4.1/ Arithmetic (Số học)
+
+**Độ ưu tiên của toán tử**
+
+**Chú ý tới ký tự ++ hoặc -- nằm trước hoặc sau biến**
+
+```dart
+// Được ưu tiên Tính toán trước khi gán giá trị
+++var		// (cộng thêm 1)
+--var		// (trừ đi 1)
+
+// Gán giá trị xong mới bắt đầu tính toán
+var++		// (cộng thêm 1)
+var--		// (trừ đi 1)
+```
+
+Giải thích cơ bản:
+
+```dart
+int a;
+int b;
+
+// ++var
+a = 0;
+b = ++a; 		// Biến a sẽ được tăng trước (0 lên 1), sau đó kết quả 1 đó sẽ được gán cho biến b
+// b = 1, a = 1
+
+// ++var
+a = 0;
+b = a++; 		// Gán giá trị a (đang là 0) cho biến b, rồi mới xử tăng biến a 
+// Lúc này thì b = 0, và a = 1
+
+// Tương tự với ký hiệu --
+```
+
+
+
+### 4.2/ Equality and relational [PENDING - Low]
+
+### 4.3/ Type test
+
+**Ép kiểu đối tượng cho 1 biến sử dụng toán tử `as` (Typecast), cách này không an toàn.**
+
+```dart
+class People {}
+
+class EmployeeManager extends People {
+  void adjustSalary() { }
+}
+
+class Developer extends People {}
+
+final People someone;
+// Ép kiểu biến someone sử dụng toán tử as, có thể throw ra 1 exception
+(someone as EmployeeManager).adjustSalary();
+```
+
+**Kiểm tra kiểu của đối tượng sử dụng toán tử `is`**
+
+```dart
+if (someone is Developer) {
+  print("This is a developer");
+} else if (someone is EmployeeManager) {
+  print("This is a manager");
+  // Trong block code của `is`, thì có thể sử dụng được các phương thức của đối tượng đó
+  someone.adjustSalary();
+} else {
+  print("Someone else");
+}
+```
+
+
+
+### 4.4/ Assignment [PENDING - Low]
+
+### 4.5/ Logical [PENDING - Low]
+
+### 4.6/ Conditional expressions [PENDING]
+
+### 4.7/ Cascade notation [PENDING]
+
+
+
+
+
+## 5/ Control flow statements
+
+### 5.1/ If, else if, else
+
+**Câu lệnh điều kiện if, else if được bao quanh bởi dấu ngoặc tròn**
+
+```dart
+if (isRaining()) {
+  print("The weather is raining.")
+} else if (isSnowing()) {
+  print("The weather is snowing.")
+} else {
+	print("The weather is boring.")
+}
+```
+
+
+
+### 5.2/ For loops
+
+**Duyệt từng phần tử trong mảng, có 2 cách để duyệt từng phần tử trong vòng lặp `for`****
+
+```dart
+// Khai báo 1 mảng các ký tự kiểu chuỗi
+final strings = ["N", "A", "M", "E", "S"];
+
+/// - Cách 1: Tự xử lý giới hạn phần tử được duyệt
+for (var index = 0; index < strings.length; index++) {
+	print("Value: ${strings[index]} (index: $index)");
+}
+
+/// - Cách 2: Vòng lặp for-in, không cần biết giá trị thứ tự của phần tử
+for (var string in strings) {
+	print(string);
+}
+```
+
+
+
+### 5.3/ While and do-while  [PENDING - Low]
+
+### 5.4/ break and continue  [PENDING]
+
+### 5.5/ Switch case  [PENDING]
+
+
+
+
+
+## 6/ Exceptions
+
+### 6.1/ Throw [PENDING]
+
+### 6.2/ Catch [PENDING]
+
+### 6.3/ Finally [PENDING]
+
+
+
+
+
+## Quick note:
+
+### 1/ Class init, get set variable.
+
+```dart
+class MyRectangle {
+  double left, right, top, bottom, width, height;
+
+  // Init function
+  MyRectangle(
+      this.left, this.right, this.top, this.bottom, this.width, this.height);
+	
+  // Get set
+  double get totalWidth => left + width + right;
+  set totalWidth(double value) {
+    width = value - left - right;
+    left = 20;
+  }
+}
+```
+
+### 2/ Abstract methods (Giống như protocol trong swift)
+
+```dart
+abstract class ViewModel {
+  int numberOfItems();
+}
+
+class MyViewModel extends ViewModel {
+  int numberOfItems() {
+    return 10;
+  }
+}
+```
+
+### 3/ Abstract methods (Giống như protocol trong swift)
+
+```dart
+class BaseController {
+  void viewDidLoad() {
+    print("viewDidLoad called from BaseController");
+  }
+}
+
+class LoginViewController extends BaseController {
+  
+  // Dùng từ khóa @override để chú thích rằng function này đang được ghi đề từ base, ko có vẫn chạy bt.
+  @override
+  void viewDidLoad() {
+    // Gọi super nếu muốn thực thi code từ base class (BaseController)
+    super.viewDidLoad();
+    print("viewDidLoad called from LoginViewController");
+  }
+}
+```
+
+### 4/ Enum
+
+```dart
+enum MyColor { lightBlue, lightGreen }
+
+void printColor(MyColor color) {
+  switch (color) {
+    case MyColor.lightBlue:
+      print("lightBlue");
+      break;
+    case MyColor.lightGreen:
+      print("lightGreen");
+      break;
+  }
+}
+
+/// Sử dụng biến .values từ enum để lấy ra 1 List<> toàn bộ case của nó
+List<MyColor> colors = MyColor.values;
+print(colors[0] == MyColor.lightBlue);
+
+/// Sử dụng .index để in ra số thứ tự (index) của case
+print(MyColor.lightBlue.index);
+print(MyColor.lightGreen.index);
+```
+
+
+

@@ -1,23 +1,24 @@
 // Basic Dart
+
 /// Function `main()`: bắt buộc phải có trong mỗi ứng dụng, nó nằm ở top level, được chạy đầu tiên khi chạy ứng dụng
 
 void main() {
-  var levels = Map<Object, Object>();
-  levels = {
-    // Key:    Value
-    "one": "Level 1",
-    2.5: "haha",
-    "final": ["a", "b", "c"],
-    "finalSet": {
-      "a": "b",
-      "c": "d",
-    },
-  };
-  levels["three"] = "Level 3";
+  List<MyColor> colors = MyColor.values;
+  print(colors[0] == MyColor.lightBlue);
 
-  print("${levels["one"]}");
-  print("${levels[2.5]}");
-  print("Total: (${levels.length})");
+  print(MyColor.lightBlue.index);
+  print(MyColor.lightGreen.index);
+}
 
-  // print(name);
+enum MyColor { lightBlue, lightGreen }
+
+void printColor(MyColor color) {
+  switch (color) {
+    case MyColor.lightBlue:
+      print("lightBlue");
+      break;
+    case MyColor.lightGreen:
+      print("lightGreen");
+      break;
+  }
 }
