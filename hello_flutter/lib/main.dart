@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_flutter/splash.dart';
 
 void main() {
   runApp(NavigationApp());
@@ -11,8 +12,8 @@ class NavigationApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        "/": (context) => isLoggedIn ? HomeScreen() : LoginScreen(),
-        DetailScreen.routeName: (context) => DetailScreen(),
+        "/": (context) => SplashScreen(),
+        // DetailScreen.routeName: (context) => DetailScreen(),
       },
     );
   }
