@@ -267,6 +267,19 @@ class ContentChildWidget extends StatelessWidget {
 
   
 
+- Life cycle, hàm dispose và initState.
+
+- ```
+  @override
+    void dispose() {
+      // The widget is removed from the widget tree
+      super.dispose();
+    }
   
+    @override
+    void initState() {
+      super.initState();
+    }
+  ```
 
 - 
