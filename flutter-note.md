@@ -87,6 +87,111 @@ ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
 
 
+#### Inherited Widget
+
+Widget này sẽ chứa các data được sử dụng chung của 1 màn hình, nó tương tự như ThemeData.
+
+```dart
+class MyMaterialApp extends StatefulWidget {
+  const MyMaterialApp({Key? key}) : super(key: key);
+
+  @override
+  _MyMaterialAppState createState() => _MyMaterialAppState();
+}
+
+class _MyMaterialAppState extends State<MyMaterialApp> {
+  int count = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+      body: MyHomeInheritedWidget(child: HomeScreen(), tapCount: count),		// khởi tạo Inherited Widget
+      floatingActionButton: TextButton(
+          onPressed: () {
+            setState(() {
+              count++;
+            });
+          },
+          child: Text("Increase count")),
+    ));
+  }
+}
+
+class MyHomeInheritedWidget extends InheritedWidget {
+  MyHomeInheritedWidget({required Widget child, required this.tapCount})
+      : super(child: child);
+
+  final int tapCount;
+
+  // [!] Hàm bắt buộc phải định nghĩa  
+  @override
+  bool updateShouldNotify(MyHomeInheritedWidget oldWidget) {
+    print("[debug] MyHomeInheritedWidget ${tapCount != oldWidget.tapCount}");
+    // Điều kiện để rebuild các Widget con, return false thì sẽ ko rebuild
+    return tapCount != oldWidget.tapCount;
+  }
+
+  // [!] Hàm bắt buộc phải định nghĩa
+  static MyHomeInheritedWidget? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<MyHomeInheritedWidget>();
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // Lấy giá trị của biến thông qua `static func of()` truyền vào 1 context
+    print("[debug] HomeScreen ${MyHomeInheritedWidget.of(context)!.tapCount}");
+    return Scaffold(
+      // Khởi tạo widget con
+      body: SafeArea(child: HomeContentWidget()),
+    );
+  }
+}
+
+class HomeContentWidget extends StatelessWidget {
+  const HomeContentWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    print(
+        "[debug] Rebuild HomeContentWidget ${MyHomeInheritedWidget.of(context)!.tapCount}");
+    return Center(
+      child: Column(
+        children: [
+          Text(
+            "Tapped: ${MyHomeInheritedWidget.of(context)!.tapCount} times",
+            style: TextStyle(color: Colors.orangeAccent),
+          ),
+          // Khởi tạo thêm 1 lớp widget con nữa
+          ContentChildWidget()
+        ],
+      ),
+    );
+  }
+}
+
+class ContentChildWidget extends StatelessWidget {
+  const ContentChildWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // Cách lấy dữ liệu ra tương tự như nhau
+    print(
+        "[debug] Rebuild ContentChildWidget ${MyHomeInheritedWidget.of(context)!.tapCount}");
+    return Text(
+      "Tapped: ${MyHomeInheritedWidget.of(context)!.tapCount} times",
+      style: TextStyle(color: Colors.lightBlueAccent),
+    );
+  }
+}
+```
+
+
+
 
 
 ## Layout
