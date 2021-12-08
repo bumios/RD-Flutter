@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(title: Text("Home screen")),
       body: Center(
         child: TextButton(
-          child: Text("Move to detail"),
+          child: Text("Move to category"),
           onPressed: () {
             Navigator.push(
               context,

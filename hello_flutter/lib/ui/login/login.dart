@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/login/textfield/logintextfield.dart';
+import 'package:hello_flutter/ui/category/categories.dart';
+import 'package:hello_flutter/ui/commonwidget/textfield/logintextfield.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -137,6 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void handleTapLoginButton() {
-    print("[DEBUG] handleTapLoginButton");
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (BuildContext context) => CategoriesScreen()));
   }
 }

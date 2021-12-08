@@ -18,7 +18,7 @@ class NavigationApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         "/": (context) => HomeScreen(),
-        "/detail": (context) => DetailScreen(),
+        "/category": (context) => DetailScreen(),
       },
     );
   }
@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(title: Text("Home screen")),
       body: Center(
         child: TextButton(
-          child: Text("Move to detail"),
+          child: Text("Move to category"),
           onPressed: () {
             // Not using `named route`
             // Navigator.push(
@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
             // Using `named route`
             Navigator.pushNamed(
               context,
-              "/detail",
+              "/category",
             );
           },
         ),
