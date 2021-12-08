@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hello_flutter/splash.dart';
-import 'package:hello_flutter/login/login.dart';
 
 void main() {
   runApp(NavigationApp());
