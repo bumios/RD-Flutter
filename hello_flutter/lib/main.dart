@@ -13,7 +13,9 @@ class NavigationApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primaryColor: Colors.yellowAccent),
+      theme: ThemeData(
+        primaryColor: Colors.yellowAccent,
+      ),
       routes: {
         "/": (context) => SplashScreen(),
         CategoriesScreen.routeName: (context) => CategoriesScreen(),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/ui/category/categories.dart';
 import 'package:hello_flutter/ui/commonwidget/textfield/logintextfield.dart';
+import 'package:hello_flutter/ui/home/home.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -16,19 +16,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/images/img_background_splash.png"),
-          fit: BoxFit.cover,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.transparent,
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: ExactAssetImage("assets/images/img_background_splash.png"),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.transparent,
-        body: Container(
+        child: Container(
           padding: EdgeInsets.only(top: 100.0, left: 30.0, right: 30.0),
           color: Colors.black.withOpacity(0.5),
           child: Column(
@@ -138,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void handleTapLoginButton() {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (BuildContext context) => CategoriesScreen()));
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (BuildContext context) => HomeScreen()));
   }
 }

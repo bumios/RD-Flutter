@@ -1,23 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
+enum BannerType { cocktail, cocoa, shot, beer }
+
+extension BannerTypeExtension on BannerType {
+  String get title {
+    // Uppercases
+    final myString = this.toString().split('.').last;
+    return "${myString[0].toUpperCase()}${myString.substring(1)}";
+  }
+
+  String get apiValue {
+    return this.toString().split('.').last;
+  }
+}
+
 class HomeBannerWidget extends StatelessWidget {
-  const HomeBannerWidget({Key? key}) : super(key: key);
+  const HomeBannerWidget({
+    Key? key,
+    required this.type,
+    required this.itemsCount,
+    this.imageUrl = "",
+    this.onTapCallback,
+  }) : super(key: key);
+
+  final BannerType type;
+  final int itemsCount;
+  final String imageUrl;
+  final VoidCallback? onTapCallback;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        loadCachedImage(),
-        loadBottomView(context),
-      ],
+    return GestureDetector(
+      onTap: () {
+        if (onTapCallback != null) {
+          onTapCallback!();
+        }
+      },
+      child: Stack(
+        children: [
+          imageUrl.isNotEmpty ? loadCachedImage() : Container(),
+          loadBottomView(context),
+        ],
+      ),
     );
   }
 
   CachedNetworkImage loadCachedImage() {
     return CachedNetworkImage(
-      imageUrl:
-          "https://www.thecocktaildb.com/images/media/drink/l3cd7f1504818306.jpg",
+      imageUrl: imageUrl,
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -43,7 +74,7 @@ class HomeBannerWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  "Title",
+                  type.title,
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     color: Colors.white,
@@ -54,7 +85,7 @@ class HomeBannerWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  "#1234",
+                  "$itemsCount items",
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
