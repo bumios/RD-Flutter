@@ -102,17 +102,23 @@ class _HomeScreenState extends State<HomeScreen> {
       future: listType,
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data != null) {
+          final drinks = snapshot.data!.drinks;
           // Safe unwrapped
-          if (snapshot.data!.drinks != null) {
+          if (drinks != null) {
             return HomeBannerWidget(
               type: type,
-              itemsCount: snapshot.data!.drinks!.length,
-              imageUrl: snapshot.data!.drinks![0].strDrinkThumb,
+              itemsCount: drinks.length,
+              imageUrl: drinks[0].strDrinkThumb,
               onTapCallback: () {
                 // listType.drinks
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CategoriesScreen()),
+                  MaterialPageRoute(
+                    builder: (context) => CategoriesScreen(
+                      screenTitle: type.title,
+                      drinks: drinks,
+                    ),
+                  ),
                 );
                 // Navigator.pushNamed(context, CategoriesScreen.routeName);
               },
