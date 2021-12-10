@@ -30,10 +30,17 @@ class _CategoryListState extends State<CategoryList> {
   }
 }
 
-Widget listItem(BuildContext context, Drink dish) {
+Widget listItem(BuildContext context, Drink drink) {
   return GestureDetector(
     onTap: () {
-      Navigator.pushNamed(context, DetailScreen.routeName);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DetailScreen(
+            drink: drink,
+          ),
+        ),
+      );
     },
     child: Container(
       height: 230,
@@ -41,7 +48,7 @@ Widget listItem(BuildContext context, Drink dish) {
       child: Stack(
         children: [
           CachedNetworkImage(
-            imageUrl: dish.strDrinkThumb,
+            imageUrl: drink.strDrinkThumb,
             imageBuilder: (context, imageProvider) => Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -64,7 +71,7 @@ Widget listItem(BuildContext context, Drink dish) {
                 children: [
                   Flexible(
                     child: Text(
-                      dish.strDrink,
+                      drink.strDrink,
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
@@ -77,7 +84,7 @@ Widget listItem(BuildContext context, Drink dish) {
                     width: 10,
                   ),
                   Text(
-                    "#${dish.idDrink}",
+                    "#${drink.idDrink}",
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w600,

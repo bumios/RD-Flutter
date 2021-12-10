@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/ui/detail/detail.dart';
 import 'package:hello_flutter/ui/splash/splash.dart';
 
 void main() {
@@ -17,7 +16,6 @@ class NavigationApp extends StatelessWidget {
       ),
       routes: {
         "/": (context) => SplashScreen(),
-        DetailScreen.routeName: (context) => DetailScreen(),
       },
     );
   }

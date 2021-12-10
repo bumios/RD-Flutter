@@ -19,11 +19,13 @@ class Drink {
   final String strDrink;
   final String strDrinkThumb;
   final String idDrink;
+  final String? strInstructions;
 
   Drink({
     required this.strDrink,
     required this.strDrinkThumb,
     required this.idDrink,
+    required this.strInstructions,
   });
 
   factory Drink.fromJson(Map<String, dynamic> json) {
@@ -31,6 +33,7 @@ class Drink {
       strDrink: json["strDrink"],
       strDrinkThumb: json["strDrinkThumb"],
       idDrink: json["idDrink"],
+      strInstructions: json["strInstructions"],
     );
   }
 }
