@@ -482,6 +482,102 @@ for (var string in strings) {
 
 
 
+## 7/ Patterns
+
+### 7.1/ Provider
+
+Tách biệt logic ra khỏi widget, dùng để khởi tạo các phương thức để lấy, thay đổi dữ liệu từ 1 model.
+
+#### 7.1.1/ Kiến thức cần biết
+
+**ChangeNotifierProvider(create:, child:)**
+
+Bọc class này ở node cao nhất của luồng mình muốn sử dụng chung data, nó có 2 tham số `create` dùng để tạo ra 1 model, và child là 1 Widget.
+
+
+
+**MultiProvider(providers:,child:)**
+
+1 MultiProvider nó có thể chứa 1 mảng các **Provider**, khai báo tại đối số providers
+
+
+
+Hàm **notifyListerners()**:
+
+Sẽ có khi class model kế thừa class ChangeNotifier: Dùng để phát ra tín hiệu cho các listener rằng đã có sự thay đổi.
+
+
+
+#### 7.1.2/ Cài đặt
+
+```dart
+// Khai báo trong file pubspec.yaml
+provider: ^4.3.1
+```
+
+
+
+#### 7.1.3/ Implements
+
+Step 1: Khởi tạo ChangeNotifierProvider.
+
+```dart
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (context)	=> FavouriteModel(),			// Khởi tạo 1 model Favourite
+      child: const MyApp(),												// Điểm khởi đầu tại MyApp
+    )
+  ); 
+}
+```
+
+Step 2: Định nghĩa class model.
+
+```dart
+class FavouriteModel extends ChangeNotifier {
+  final List<Item> _items = [];
+  
+  int getItemsCount() => _items.length;
+  
+	void add(Item item) {
+		// code xử lý cập nhật data
+    notifyListeners();			// Phát ra tín hiệu mỗi khi data có thay đổi
+  }
+  
+  void remove(Item item) {
+		// code xử lý cập nhật data
+    notifyListeners();			// Phát ra tín hiệu mỗi khi data có thay đổi
+  }
+}
+```
+
+Step 3: Nhận dữ liệu.
+
+**C1:** Sử dụng consumer.
+
+```dart
+Consumer<FavouriteModel>(
+  builder: (context, favouriteModel, child) {
+    return Text("Total items: ${favouriteModel.getItemsCount()}");
+  }
+);
+```
+
+**C2:** Sử dụng Provider.of<MyProvider>.
+
+```dart
+Text("Total items: ${Provider.of<FavouriteModel>(context, listen: false).getItemsCount()}");
+```
+
+
+
+### 7.2/ BLoC
+
+Tách biệt logic ra khỏi widget.
+
+#### 7.1.1/ Kiến thức cần biết 
+
 
 
 ## Quick note:
@@ -505,7 +601,9 @@ class MyRectangle {
 }
 ```
 
-### 2/ Abstract methods (Giống như protocol trong swift)
+### 2/ Abstract methods/class (Giống như protocol trong swift)
+
+1 abstract class không thể khởi tạo như 1 class thông thường
 
 ```dart
 abstract class ViewModel {
@@ -517,9 +615,13 @@ class MyViewModel extends ViewModel {
     return 10;
   }
 }
+
+final viewModel = ViewModel()				// Lỗi: 1 abstract class ko thể khởi tạo
 ```
 
-### 3/ Abstract methods (Giống như protocol trong swift)
+### 3/ Từ khóa extends
+
+Kế thừa class, nhưng không nhất thiết phải override lại hết các phương thức.
 
 ```dart
 class BaseController {
@@ -540,7 +642,38 @@ class LoginViewController extends BaseController {
 }
 ```
 
-### 4/ Enum
+### 4/ Từ khóa implements
+
+Mỗi class có thể implements nhiều class khác, và bắt buộc phải override lại hết tất cả phương thức và thuộc tính của nó.
+
+```dart
+class Person {
+  String name;
+  
+  Person(this.name);
+  
+  void printName() => print(name);
+}
+
+class Animation {
+  void running() {}
+}
+
+class Me implements Person, Animation {
+  @override 
+	String get name => this.name;	
+  
+  @override
+  void printName() {
+    print("My name is $name");
+  }
+  
+  @override
+  void running() => print("I'm running");
+}
+```
+
+### 5/ Enum
 
 ```dart
 enum MyColor { lightBlue, lightGreen }
@@ -565,5 +698,27 @@ print(MyColor.lightBlue.index);
 print(MyColor.lightGreen.index);
 ```
 
+### 6/ mixing with/on
 
+```dart
+class Button {}
+
+// Định nghĩa các phương thức của mixin
+mixin Image {
+  void addImage() {}
+}
+
+mixin Border {
+  void addBorder {}
+}
+
+// 1 class có thể gắn được với nhiều mixin
+class ImageButton extends Button with Image, Border {}	// Có image, bo góc (border)
+class TextButton extends Button with Border {}		// Không có image, Chỉ có bo góc (border)
+
+// Khai báo mixin cho 1 class bằng từ khóa on
+mixin Border on TextButton {
+  void addBorder {}
+}
+```
 
