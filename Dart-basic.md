@@ -572,11 +572,9 @@ Text("Total items: ${Provider.of<FavouriteModel>(context, listen: false).getItem
 
 
 
-### 7.2/ BLoC
+### 7.2/ BLoC [Pending]
 
-Tách biệt logic ra khỏi widget.
-
-#### 7.1.1/ Kiến thức cần biết 
+### 7.3/ GetX [Pending]
 
 
 
@@ -721,4 +719,3 @@ mixin Border on TextButton {
   void addBorder {}
 }
 ```
-

@@ -202,7 +202,7 @@ class ContentChildWidget extends StatelessWidget {
 
 
 
-## Others: 
+## Others:
 
 - Mọi view đều được gọi là **Widget**.
 
@@ -269,7 +269,7 @@ class ContentChildWidget extends StatelessWidget {
 
 - Life cycle, hàm dispose và initState.
 
-- ```
+- ```dart
   @override
     void dispose() {
       // The widget is removed from the widget tree
@@ -282,4 +282,78 @@ class ContentChildWidget extends StatelessWidget {
     }
   ```
 
-- 
+### - Keys:
+
+#### 1. Local Key
+
+Mỗi khi tạo Widget sẽ có 1 Element tương ứng được tạo ra để quản lý cái State & việc rebuild UI của Widget đó. Nhưng nếu là 1 statefull widget, vị trí của Widget thay đổi, thì element nó sẽ ko biết được những element nào bị thay đổi. Vì vậy cần phải thông báo key, giống như tạo định danh riêng cho mỗi widget đó.
+
+```dart
+class FavouriteItem extends StatefulWidget {
+  // Khai báo thêm key ở constructor
+  FavouriteItem({Key key}) : super(key: key);
+  
+  @override
+  _FavouriteItemState createState() {
+    return _FavouriteItemState();
+  }
+}
+
+class HomePageWidget {
+  // Lúc khởi tạo các class con, thì khởi tạo ra 1 key và gán nó cho các widget con.
+  // UniqueKey() sẽ tự động tạo ra 1 key riêng biệt, không bao giờ bị trùng
+  var favouritesWidget = <Widget>[FavouriteItem(key: UniqueKey()), 
+                                 FavouriteItem(key: UniqueKey())]
+}
+```
+
+LocalKey nên được đặt ở widget cấp cao nhất có thể, và bắt buộc các widget phải cùng 1 level trên tree. Từ ví dụ trên, kết quả sẽ khác nếu mình bọc nó vào trong 1 Widget Padding.
+
+```dart
+// Hiện tại local key đã được lồng ở bên trong 1 lớp Padding, nên quá trình tìm kiếm widget theo key (matching up widget to elements) sẽ không hoạt động như ví dụ trước đó. 
+var favouritesWidget = <Widget>[
+  Padding(
+    child: FavouriteItem(key: UniqueKey()), 
+  ),
+  Padding(
+		child: FavouriteItem(key: UniqueKey()),
+  ),
+]
+  
+// Để giải quyết vấn đề trên, đặt key tại Widget Padding.
+var favouritesWidget = <Widget>[
+  Padding(
+    key: UniqueKey(),
+    child: FavouriteItem(), 
+  ),
+  Padding(
+    key: UniqueKey(),
+		child: FavouriteItem(),
+  ),
+]
+```
+
+UniqueKey là 1 loại local key, ngoài ra còn có 1 số loại khác như ValueKey và ObjectKey. ValueKey thì nó sẽ so sánh các giá trị của key, còn ObjectKey thì nó sẽ so sánh theo địa chỉ của cái object đó.
+
+** Lưu ý: nếu sử dụng 2 loại key này là lúc định nghĩa giá trị, nếu nó cùng cha, thì bắt buộc giá trị không được trùng nhau.
+
+```dart
+// 1 ví dụ không hợp lệ về value key, vì 2 widget padding đang có cùng 1 cha.
+var favouritesWidget = <Widget>[
+  Padding(
+    key: ValueKey("my-favourite-key"),
+    child: FavouriteItem(), 
+  ),
+  Padding(
+    key: ValueKey("my-favourite-key"),
+		child: FavouriteItem(),
+  ),
+]
+
+// 1 ví dụ khác, trùng key nhưng hợp lệ vì nó không đứng ngang hàng với nhau
+Padding(
+  key: ValueKey("my-favourite-key"),
+  child: FavouriteItem(key: ValueKey("my-favourite-key")),
+)
+```
+
