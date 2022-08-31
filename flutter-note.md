@@ -44,7 +44,13 @@ Là 1 widget đã phân chia sẵn các phần component của layout ra như ap
 
 ##### Container:
 
-Có thể custom các thuộc tính bên trong nó như padding, margin, borders.
+Dùng để gom nhiều widget con bên trong nó, có sẵn các tham số custom như padding, margin, borders.
+
+
+
+##### Stack
+
+Có thể chứa nhiều widget nhỏ ở trong, nhưng sẽ sắp xếp theo kiểu xếp lớp chồng lên nhau.
 
 
 
@@ -83,6 +89,42 @@ Hiển thị 1 view giống như thông báo nhưng chạy từ dưới lên tr�
 ```dart
 final snackBar = SnackBar(content: Text("Heo con ăn cám !!!"));
 ScaffoldMessenger.of(context).showSnackBar(snackBar);
+```
+
+
+
+#### Wrap
+
+Wrap là 1 layout widget tự động sắp xếp các widget nhỏ bên trong, nếu không đủ hiển thị trên cùng 1 hàng thì nó sẽ tự động sắp xếp xuống hàng mới.
+
+```dart
+Wrap(
+    alignment: WrapAlignment.start,
+    spacing: 12,
+    children: [
+      Chip(
+        label: Text('Healthy',
+            style: FooderlichTheme.darkTextTheme.bodyText1),
+        backgroundColor: Colors.black.withOpacity(0.7),
+        onDeleted: () {
+          print('delete');
+        },
+      ),
+      Chip(
+        label: Text('Vegan',
+            style: FooderlichTheme.darkTextTheme.bodyText1),
+        backgroundColor: Colors.black.withOpacity(0.7),
+        onDeleted: () {
+          print('delete');
+        },
+      ),
+      Chip(
+        label: Text('Carrots',
+            style: FooderlichTheme.darkTextTheme.bodyText1),
+        backgroundColor: Colors.black.withOpacity(0.7),
+      ),
+    ],
+  )
 ```
 
 
@@ -205,6 +247,8 @@ class ContentChildWidget extends StatelessWidget {
 ## Others:
 
 - Mọi view đều được gọi là **Widget**.
+
+- Có 2 loại thiết kế hệ thống chính là Material (Android) và Cupertino (iOS), nó hỗ trợ mình build giao diện giống với thiết kế bên native hơn. Nên sử dụng Material vì nó hỗ trợ nhiều thành phần được custom hơn.
 
 - Hàm **main()** là nơi mà code sẽ được thực thi đầu tiên.
 
