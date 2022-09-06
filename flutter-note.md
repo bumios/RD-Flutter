@@ -401,3 +401,46 @@ Padding(
 )
 ```
 
+
+
+## Key points
+
+### Basic widget
+
+- Three main categories of widgets are: structure and navigation; displaying information; and, positioning widgets.
+- There are two main visual design systems available in Flutter, **Material** and **Cupertino**. They help you build apps that look native on Android and iOS, respectively.
+- Using the **Material** theme, you can build quite varied user interface elements to give your app a custom look and feel.
+- It’s generally a good idea to establish a common theme object for your app, giving you a single source of truth for your app’s style.
+- The **Scaffold** widget implements all your basic visual layout structure needs.
+- The **Container** widget can be used to group other widgets together.
+- The **Stack** widget layers child widgets on top of each other.
+
+### Understanding Widgets
+
+- Flutter maintains three trees in parallel: the `Widget`, `Element` and `RenderObject` trees.
+- A Flutter app is performant because it maintains its structure and only updates the widgets that need redrawing.
+- The **Flutter Inspector** is a useful tool to debug, experiment with and inspect a widget tree.
+- You should always start by creating `StatelessWidget`s and only use `StatefulWidget`s when you need to manage and maintain the state of your widget.
+- Inherited widgets are a good solution to access state from the top of the tree.
+
+### Scrollable widgets
+
+- **ListView** and **GridView** support both horizontal and vertical scroll directions.
+- The **primary** property lets Flutter know which scroll view is the primary scroll view.
+- **physics** in a scroll view lets you change the user scroll interaction.
+- Especially in a **nested list view**, remember to set `shrinkWrap` to **true** so you can give the scroll view a fixed height for all the items in the list.
+- Use a **FutureBuilder** to wait for an asynchronous task to complete.
+- You can nest scrollable widgets. For example, you can place a grid view within a list view. Unleash your wildest imagination!
+- Use **ScrollController** and **ScrollNotification** to control or listen to scroll behavior.
+- **Barrel** files are handy to group imports together. They also let you import many widgets using a single file.
+
+### Interactive Widgets
+
+### Others
+
+- Build a new app with `flutter create`.
+- Use widgets to compose a screen with controls and layout.
+- Use widget parameters for styling.
+- A `MaterialApp` widget specifies the app, and `Scaffold` specifies the high-level structure of a given screen.
+- State allows for interactive widgets.
+- When state changes, you usually need to hot restart the app instead of hot reload. In some case, you may also need to rebuild and restart the app entirely.
