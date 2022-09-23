@@ -455,6 +455,42 @@ Padding(
 
 
 
+### Routes & Navigation
+
+- You can wrap another router in a **containing widget**.
+- **Navigator 1.0** is useful for quick and simple prototypes, presenting alerts and dialogs.
+- **Navigator 2.0** is useful when you need more control and organization when managing the navigation stack.
+- In Navigator 2.0, the navigator widget holds a list of `MaterialPage` objects.
+- Use a **router widget** to listen to navigation state changes and configure your navigator’s list of pages.
+- Setting the router’s **Back** button dispatcher lets you listen to platform system events.
+
+
+
+### Shared Preferences
+
+- There are multiple ways to save data in an app: to files, in shared preferences and to a SQLite database.
+- Shared preferences are best used to store simple, key-value pairs of primitive types like strings, numbers and Booleans.
+- An example of when to use shared preferences is to save the tab a user is viewing, so the next time the user starts the app, they’re brought to the same tab.
+- The `async`/`await` keyword pair let you run asynchronous code off the main UI thread and then wait for the response. An example is getting an instance of `SharedPreferences`.
+- The shared_preferences plugin should not be used to hold sensitive data. Instead, consider using the **flutter_secure_storage** plugin.
+
+
+
+### Serialization With JSON
+
+- JSON is an open-standard format used on the web and in mobile clients, especially with REST APIs.
+- In mobile apps, JSON code is usually parsed into the model objects that your app will work with.
+- You can write JSON parsing code yourself, but it’s usually easier to let a JSON package generate the parsing code for you.
+- **json_annotation** and **json_serializable** are packages that will let you generate the parsing code.
+
+
+
+### Networking in Flutter
+
+
+
+
+
 ### Others
 
 - Build a new app with `flutter create`.
