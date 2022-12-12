@@ -487,7 +487,20 @@ Padding(
 
 ### Networking in Flutter
 
+- The **HTTP** package is a simple-to-use set of methods for retrieving data from the internet.
+- The built-in `json.decode` transforms JSON strings into a map of objects that you can use in your code.
+- `FutureBuilder` is a widget that retrieves information from a `Future`.
+- `GridView` is useful for displaying columns of data.
 
+
+
+### Usign the "Chopper" Library
+
+- The **Chopper** package provides easy ways to retrieve data from the internet.
+- You can add headers to each network request.
+- Interceptors can intercept both requests and responses and change those values.
+- Converters can modify requests and responses.
+- It’s easy to set up global logging.
 
 
 
